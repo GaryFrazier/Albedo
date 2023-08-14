@@ -2,31 +2,32 @@ CC=gcc
 
 RM=rm -rf
 
-CFLAGS=-c -Wall -O3
+CFLAGS=-c -Wall -O3 -g
 
 LDFLAGS=-lm
 
-rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
+# Directories
+SRC_DIR := ./src
+OBJ_DIR := ./bin/obj
+BIN_DIR := ./bin
 
-SOURCES=$(call rwildcard,src,*.c *.h)
+# Find all C source files in the src directory and its subdirectories
+SRCS := $(shell find $(SRC_DIR) -name "*.c")
 
+# Generate object file names from source file names
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
+all: $(BIN_DIR)/albedoc.exe
 
-OBJDIR=./bin/obj
-EXECDIR=./bin
+# Compile C source files into object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Make directories (windows)
-DIRS=bin bin/obj
-
-$(shell mkdir -p $(DIRS))
-
-all: exec 
-
-$(OBJDIR)/%.o: $(SOURCES)
-	$(CC) $(CFLAGS) $< -o $(OBJDIR)/$(notdir $@)
-
-exec: $(OBJDIR)/%.o
-	$(CC) $^ $(LDFLAGS) -o $(EXECDIR)/albedoc
+# Link object files to create the executable
+$(BIN_DIR)/albedoc.exe: $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
 .PHONY: clean
 clean:
