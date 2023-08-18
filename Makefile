@@ -4,7 +4,7 @@ RM=rm -rf
 
 CFLAGS=-c -O3 -g -Iinclude
 
-LDFLAGS=-lm -lvulkan-1 -lglfw3 -Iinclude -Llib
+LDFLAGS=-lm -lvulkan-1 -lglfw3 -lgdi32 -Iinclude -Llib
 
 # Directories
 SRC_DIR := ./src
