@@ -1,6 +1,8 @@
 #pragma once
 #include <stdlib.h>
 #include <stdio.h>
+#include "../include/cglm/cglm.h"
+#include "../include/cglm/call.h"
 
 typedef unsigned char uint8;
 typedef signed char int8;

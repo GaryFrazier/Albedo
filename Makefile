@@ -2,9 +2,9 @@ CC=gcc
 
 RM=rm -rf
 
-CFLAGS=-c -O3 -g
+CFLAGS=-c -O3 -g -Iinclude
 
-LDFLAGS=-lm -lvulkan-1 -lglfw3 -Llib
+LDFLAGS=-lm -lvulkan-1 -lglfw3 -Iinclude -Llib
 
 # Directories
 SRC_DIR := ./src
